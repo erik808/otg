@@ -2,31 +2,32 @@ function [graph, map, V, D] = main(adjfile, mapfile)
 
   graph = sparse(load(adjfile));
   N = size(graph,1);
-  
-  A1 = speye(N) + graph;  
-  A2 = A1 + (A1^2)/2;
-  A3 = A2 + (A1^3)/6;
-  A4 = A3 + (A1^4)/24;
 
+  A0 = speye(N);
+  A1 = speye(N) + graph;
+  Ap = A1;
+  o  = 2;
+  Ao = zeros(N);
+  for j = 1:o
+	Ao = Ao + 1/factorial(j)*Ap;
+	Ap = Ap * graph;
+  end
+  
   figure(1)
   subplot(2,2,1)
   spy(A1, 'k.');
   subplot(2,2,2)
-  spy(A2 + 0.5*graph*graph, 'k.');		   
+  spy(Ao, 'k.');
   subplot(2,2,3)
-  spy(A3, 'k.');		   
-  subplot(2,2,4)
-  spy(A4, 'k.');
-  
-  [V,D] = eigs(A1,6,'lm');
+
+  opts.tol=eps;
+  [V,D] = eigs(Ao,6,'lm',opts);
 
   map   = importdata(mapfile);
 
   figure(2)
   % principal eigenvector
-  for k = 1:4
-	ev = V(:,k);
-	subplot(2,2,k)
-	plot(map.data, ev, 'k.', map.data, diag(A4)/norm(diag(A4)), 'ro');
-  end
+  ev = V(:,1);
+  ev(abs(ev)<1e-3) = 0;
+  plot(map.data, abs(ev)/max(abs(ev)), 'k.');
 end
