@@ -3,38 +3,53 @@
 
 class CypherPair
 {
-	char d_first;
-	char d_second;
+    char d_first;
+    char d_second;
 
 public:
-	CypherPair(char f, char s):
-		first(f),
-		second(s)
-		{}
+    CypherPair(char f, char s):
+        first(f),
+        second(s)
+    {}
 
-	char first() { return d_first; }
-	char second() { return d_second; }
+    CypherPair(std::string const &pr)
+    {
+        if (pr.size() != 2)
+            throw std::string("Error: cypherpair not of length 2: ") + pr;
+
+        d_first = pr[0];
+        d_second = pr[1];
+    }
+
+    char first() { return d_first; }
+    char second() { return d_second; }
 };
 
 using PairMatrix = std::vector<std::vector<CypherPair>>;
-
+using AdjacencyMatrix = std::vector<std::vector<bool>>;
 
 PairMatrix makePairMatrix(std::ifstream &infile, int repeatLength)
 {
-	PairMatrix result;
-
+    PairMatrix result(1);
+    result[0].reserve(repeatLength);
+    
+    while (checkForLoop())
+    {
+        std::string pair
+    }
+    
 }
 
 int main(int argc, char **argv)
 {
-	if (argc < 3)
-	{
-		std::cerr << "Syntax: " << argv[0] << " [input file] [repeat length]\n";
-		return 1;
-	}
+    if (argc < 3)
+    {
+        std::cerr << "Syntax: " << argv[0] << " [input file] [repeat length]\n";
+        return 1;
+    }
 	
-	std::ifstream infile(argv[1]);
-	int repeatLength = std::stoi(argv[2]);
+    std::ifstream infile(argv[1]);
+    int repeatLength = std::stoi(argv[2]);
 
-	PairMatrix pm = makePairMatrix(infile, repeatLength);
+    PairMatrix pm = makePairMatrix(infile, repeatLength);
 }
