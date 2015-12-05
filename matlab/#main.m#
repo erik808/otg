@@ -1,6 +1,0 @@
-function [] = main(filename, )
-
-  graph = load('filename');
-  graph 
-  
-end
