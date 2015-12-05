@@ -33,9 +33,18 @@ PairMatrix makePairMatrix(std::ifstream &infile, int repeatLength)
     PairMatrix result(1);
     result[0].reserve(repeatLength);
     
-    while (checkForLoop())
+    int iteration = 0;
+    while (checkForLoopCondition())
     {
-        std::string pair
+        std::string pair; 
+        inFile >> pair;
+        
+        result[iteration].push_back(CypherPair(pair));
+        if (result[iteration].size() == repeatLength)
+        {
+            result.push_back({});
+            ++iteration;
+        }
     }
     
 }
