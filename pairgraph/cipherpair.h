@@ -53,7 +53,10 @@ public:
     }
 };
 
-std::ostream &operator<<(std::ostream &out, CipherPair const &pr);
+inline std::ostream &operator<<(std::ostream &out, CipherPair const &pr)
+{
+    return (out << pr.first() << pr.second() << pr.direction());
+}
 
 #endif // CIPHERPAIR_H
 

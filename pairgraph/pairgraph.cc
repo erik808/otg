@@ -96,8 +96,3 @@ AdjacencyMatrix makeAdjacencyMatrix(CipherPairMatrix const &matrix, CipherPairMa
 
     return result;
 }
-
-std::ostream &operator<<(std::ostream &out, CipherPair const &pr)
-{
-    return (out << pr.first() << pr.second() << pr.direction());
-}
